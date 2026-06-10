@@ -9,6 +9,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   site: "https://ynkotp228.github.io",
-  base: "/AutoDetailing/",
+  base: "/ApexDetailing/",
   integrations: [sitemap()],
 });
