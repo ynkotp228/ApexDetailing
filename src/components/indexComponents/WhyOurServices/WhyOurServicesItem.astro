@@ -1,7 +1,7 @@
 ---
 import { Picture } from "astro:assets";
 
-const { title, description, image } = Astro.props;
+const { title, description, image, alt } = Astro.props;
 ---
 
 <article
@@ -11,7 +11,7 @@ const { title, description, image } = Astro.props;
     <Picture
         class="media-bg transition-transform duration-700 ease-out group-hover:scale-105"
         src={image}
-        alt={title}
+        alt={alt}
         widths={[320, 540, 720]}
         sizes="(min-width: 768px) 50vw, 100vw"
         formats={['avif', 'webp']}
