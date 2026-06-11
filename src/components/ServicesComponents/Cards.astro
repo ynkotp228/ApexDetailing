@@ -1,7 +1,15 @@
 ---
 import CardItem from "./CardItem.astro"
+import priceImage1 from "../../assets/images/ServicesPageImages/priceImage1.webp";
+import priceImage2 from "../../assets/images/ServicesPageImages/priceImage2.webp";
+import priceImage3 from "../../assets/images/ServicesPageImages/priceImage3.webp";
+import priceImage4 from "../../assets/images/ServicesPageImages/priceImage4.webp";
+import priceImage5 from "../../assets/images/ServicesPageImages/priceImage5.webp";
+
 const services = [
   {
+    
+    img: priceImage1,
     id: "polishing",
     title: "Відновлювальне полірування кузова",
     price: "від 8 000 грн",
@@ -17,6 +25,7 @@ const services = [
     ]
   },
   {
+    img: priceImage2,
     id: "ceramics",
     title: "Нанесення нанокераміки 9H",
     price: "від 12 000 грн",
@@ -31,7 +40,8 @@ const services = [
       "Видача фірмового гарантійного талона на покриття терміном від 12 місяців"
     ]
   },
-  {
+  {    
+    img: priceImage3,
     id: "ppf-film",
     title: "Обклеювання антигравійною плівкою (PPF)",
     price: "від 25 000 грн",
@@ -46,7 +56,8 @@ const services = [
       "Фінальний термозахист країв (активація клейового шару) та суворий контроль стиків"
     ]
   },
-  {
+  { 
+    img: priceImage4,
     id: "interior-detailing",
     title: "Глибока хімчистка салону з демонтажем",
     price: "від 6 000 грн",
@@ -61,7 +72,8 @@ const services = [
       "Фінішне озонування салону генератором озону для знищення бактерій, спор цвілі та запахів"
     ]
   },
-  {
+  { 
+    img: priceImage5,
     id: "pre-sale",
     title: "Передпродажна підготовка автомобіля",
     price: "від 4 500 грн",
@@ -89,8 +101,8 @@ const services = [
             </p>
         </div>
 
-        <div class="mx-auto mt-12 max-w-4xl space-y-4">
-            {services.map(service => <CardItem {...service} />)}
+        <div class="mx-auto mt-12 max-w-5xl space-y-4">
+            {services.map((service, i) => <CardItem {...service} reverse={i % 2 === 1} />)}
         </div>
     </div>
 </section>

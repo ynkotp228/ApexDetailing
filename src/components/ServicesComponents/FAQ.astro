@@ -29,12 +29,14 @@ const faqs = [
             <h2 class="section-title mt-3">Найпоширеніші запитання</h2>
         </div>
 
-        <div class="mx-auto mt-12 max-w-3xl space-y-4">
-            {faqs.map(item => (
+        <div class="mx-auto mt-12 grid max-w-5xl items-start gap-4 sm:grid-cols-2">
+            {faqs.map((item, i) => (
                 <details
                     name="faq"
-                    class="group rounded-lg border border-carbon-900/10 bg-clinic-50 shadow-sm
-                           transition open:border-cobalt-500/40"
+                    class:list={[
+                        "group rounded-lg border border-carbon-900/10 bg-clinic-50 shadow-sm transition open:border-cobalt-500/40",
+                        i === faqs.length - 1 && "sm:col-span-2",
+                    ]}
                 >
                     <summary
                         class="flex cursor-pointer list-none items-center justify-between gap-4 p-5

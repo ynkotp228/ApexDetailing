@@ -64,7 +64,7 @@
 					<div class="sm:col-span-2">
 						<label for="option" class="field-label">Що саме вас цікавить?</label>
 						<select id="option" name="option" required class="field">
-							<option value="" disabled selected>Оберіть послугу з списку</option>
+							<option value="nothing" disabled selected>Оберіть послугу з списку</option>
 							<option value="Comprehensive bodywork polishing">Комплексне полірування кузова</option>
 							<option value="Application of 9H nanoceramics">Нанесення нанокераміки 9H</option>
 							<option value="Stone chip protection film (Full protection)">Антигравійна плівка (Повний захист)</option>
@@ -73,6 +73,7 @@
 							<option value="Pre-sale preparation">Передпродажна підготовка</option>
 							<option value="I need advice from a professional">Потрібна консультація майстра</option>
 						</select>
+						<p class="field-error" data-error-for="option" hidden></p>
 					</div>
 				</div>
 
@@ -96,6 +97,7 @@
 	const status = document.getElementById("form-status");
 
 	if (form && status) {
+		const optionInput = form.elements.namedItem("option") as HTMLSelectElement;
 		const nameInput = form.elements.namedItem("name") as HTMLInputElement;
 		const telInput = form.elements.namedItem("tel") as HTMLInputElement;
 		const messageInput = form.elements.namedItem("message") as HTMLTextAreaElement;
@@ -106,7 +108,7 @@
 			status.dataset.state = ok ? "ok" : "error";
 		};
 
-		const setFieldError = (input: HTMLInputElement | HTMLTextAreaElement, msg: string) => {
+		const setFieldError = (input: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement, msg: string) => {
 			const errorEl = form.querySelector<HTMLElement>(`[data-error-for="${input.name}"]`);
 			if (msg) {
 				if (errorEl) {
@@ -142,9 +144,15 @@
 		const validateMessage = (): string => {
 			const value = messageInput.value.trim();
 			if (!value) return "Будь ласка, опишіть ваше запитання.";
-			if (value.length < 10) {
-				return `Повідомлення занадто коротке (мінімум 10 символів, зараз ${value.length}).`;
+			if (value.length < 2) {
+				return `Повідомлення занадто коротке (мінімум 2 символів, зараз ${value.length}).`;
 			}
+			return "";
+		};
+
+		const validateOption = (): string => {
+			const value = optionInput.value;
+			if (!value || value === "nothing") return "Будь ласка, оберіть послугу зі списку.";
 			return "";
 		};
 
@@ -172,7 +180,7 @@
 		messageInput.addEventListener("input", () => {
 			if (messageInput.getAttribute("aria-invalid")) setFieldError(messageInput, validateMessage());
 		});
-
+		optionInput.addEventListener("change", () => setFieldError(optionInput, validateOption()));
 		form.addEventListener("submit", async (e) => {
 			e.preventDefault();
 
@@ -180,12 +188,14 @@
 				name: validateName(),
 				tel: validateTel(),
 				message: validateMessage(),
+				option: validateOption(),
 			};
 			setFieldError(nameInput, errors.name);
 			setFieldError(telInput, errors.tel);
 			setFieldError(messageInput, errors.message);
+			setFieldError(optionInput, errors.option);
 
-			const firstInvalid = [nameInput, telInput, messageInput].find(
+			const firstInvalid = [nameInput, telInput, messageInput, optionInput].find(
 				(input) => input.getAttribute("aria-invalid"),
 			);
 			if (firstInvalid) {
